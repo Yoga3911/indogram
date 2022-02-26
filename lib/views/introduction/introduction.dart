@@ -26,7 +26,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
           style: TextStyle(fontSize: 17),
         ),
         image: SvgPicture.asset(
-          "assets/images/chat3.svg",
+          "assets/images/vector/chat3.svg",
           height: _size.height * 0.2,
           width: _size.width * 0.6,
         ),
@@ -42,7 +42,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
           textAlign: TextAlign.center,
         ),
         image: SvgPicture.asset(
-          "assets/images/chat2.svg",
+          "assets/images/vector/chat2.svg",
           height: _size.height * 0.2,
           width: _size.width * 0.6,
         ),
@@ -56,14 +56,21 @@ class _IntroductionPageState extends State<IntroductionPage> {
           style: TextStyle(fontSize: 17),
         ),
         footer: ElevatedButton(
-            onPressed: () => Navigator.pushReplacement(context,
-                MaterialPageRoute(builder: ((context) => const Login()))),
-            child: const Text("Let's Go!"),
-            style: ElevatedButton.styleFrom(
-                shape: RoundedRectangleBorder(
-                    borderRadius: BorderRadius.circular(15)))),
+          onPressed: () => Navigator.pushReplacement(
+            context,
+            MaterialPageRoute(
+              builder: ((context) => const Login()),
+            ),
+          ),
+          child: const Text("Let's Go!"),
+          style: ElevatedButton.styleFrom(
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(15),
+            ),
+          ),
+        ),
         image: SvgPicture.asset(
-          "assets/images/chat1.svg",
+          "assets/images/vector/chat1.svg",
           height: _size.height * 0.2,
           width: _size.width * 0.6,
         ),
@@ -72,12 +79,14 @@ class _IntroductionPageState extends State<IntroductionPage> {
     return IntroductionScreen(
       scrollPhysics: const NeverScrollableScrollPhysics(),
       dotsDecorator: DotsDecorator(
-          color: Colors.white,
-          activeColor: Core.primary,
-          size: const Size(10, 10),
-          activeSize: const Size(20, 10),
-          activeShape:
-              RoundedRectangleBorder(borderRadius: BorderRadius.circular(20))),
+        color: Colors.white,
+        activeColor: Core.primary,
+        size: const Size(10, 10),
+        activeSize: const Size(20, 10),
+        activeShape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(20),
+        ),
+      ),
       pages: pageView,
       showSkipButton: true,
       skip: const Text(
@@ -90,10 +99,17 @@ class _IntroductionPageState extends State<IntroductionPage> {
       ),
       done: const Text(
         "Done",
-        style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+        style: TextStyle(
+          fontSize: 16,
+          fontWeight: FontWeight.w600,
+        ),
       ),
       onDone: () => Navigator.pushReplacement(
-          context, MaterialPageRoute(builder: ((context) => const Login()))),
+        context,
+        MaterialPageRoute(
+          builder: ((context) => const Login()),
+        ),
+      ),
       showDoneButton: true,
     );
   }

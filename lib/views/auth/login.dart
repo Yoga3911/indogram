@@ -39,7 +39,7 @@ class Login extends StatelessWidget {
                       const SizedBox(height: 50),
                       // >>> IMAGE <<<
                       SvgPicture.asset(
-                        "assets/images/login.svg",
+                        "assets/images/vector/login.svg",
                         height: _size.height * 0.2,
                         width: _size.width * 0.6,
                       ),
@@ -71,7 +71,10 @@ class Login extends StatelessWidget {
                             ),
                           );
                         },
-                        child: const Text("Sign In"),
+                        child: const Text(
+                          "Sign In",
+                          style: TextStyle(fontSize: 16),
+                        ),
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(_size.width, 45),
                           shape: RoundedRectangleBorder(

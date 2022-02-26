@@ -37,7 +37,7 @@ class Register extends StatelessWidget {
                       const SizedBox(height: 50),
                       // >>> IMAGE <<<
                       SvgPicture.asset(
-                        "assets/images/register.svg",
+                        "assets/images/vector/register.svg",
                         width: _size.width * 0.6,
                         height: _size.height * 0.2,
                       ),
@@ -90,7 +90,10 @@ class Register extends StatelessWidget {
                             ),
                           );
                         },
-                        child: const Text("Sign Up"),
+                        child: const Text(
+                          "Sign Up",
+                          style: TextStyle(fontSize: 16),
+                        ),
                         style: ElevatedButton.styleFrom(
                           fixedSize: Size(_size.width, 45),
                           shape: RoundedRectangleBorder(

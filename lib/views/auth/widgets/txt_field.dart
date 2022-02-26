@@ -55,8 +55,9 @@ class _MyTextFieldState extends State<MyTextField> {
     return TextField(
       obscureText: widget.isPassword ? isVisible : false,
       onChanged: widget.isPassword
-          ? (!widget.isLogin && (widget.label == "Password" ||
-                  widget.label == "Retype Password"))
+          ? (!widget.isLogin &&
+                  (widget.label == "Password" ||
+                      widget.label == "Retype Password"))
               ? (val) {
                   setState(
                     () {
@@ -72,15 +73,17 @@ class _MyTextFieldState extends State<MyTextField> {
               : null
           : (!widget.isLogin && widget.label == "Email")
               ? (val) {
-                setState(() {
-                  if (!val.contains("@")) {
-                    isError = true;
-                    error = "Email";
-                  } else {
-                    isError = false;
-                  }
-                });
-              }
+                  setState(
+                    () {
+                      if (!val.contains("@")) {
+                        isError = true;
+                        error = "Email";
+                      } else {
+                        isError = false;
+                      }
+                    },
+                  );
+                }
               : null,
       controller: widget.controller,
       focusNode: _focusNode,
@@ -88,7 +91,13 @@ class _MyTextFieldState extends State<MyTextField> {
         floatingLabelBehavior: isFloating
             ? FloatingLabelBehavior.auto
             : FloatingLabelBehavior.never,
-        errorText: !widget.isLogin? isError? (error == "Password")? "Minimum 6 characters" : "Email must contain @" : null : null,
+        errorText: !widget.isLogin
+            ? isError
+                ? (error == "Password")
+                    ? "Minimum 6 characters"
+                    : "Email must contain @"
+                : null
+            : null,
         filled: true,
         fillColor: Core.primaryX,
         prefixIcon: Icon(
@@ -120,6 +129,10 @@ class _MyTextFieldState extends State<MyTextField> {
         border: OutlineInputBorder(
           borderRadius: BorderRadius.circular(15),
         ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(15),
+          borderSide: const BorderSide(color: Colors.transparent)
+        ), 
       ),
     );
   }
