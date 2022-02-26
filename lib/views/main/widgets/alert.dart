@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
 
-import '../../auth/login.dart';
-
 class Alert extends StatelessWidget {
   const Alert({Key? key}) : super(key: key);
 
@@ -30,12 +28,8 @@ class Alert extends StatelessWidget {
           child: const Text("Batal"),
         ),
         ElevatedButton(
-          onPressed: () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: (context) => const Login(),
-            ),
-          ),
+          onPressed: () => Navigator.pushNamedAndRemoveUntil(
+              context, "/auth/login", (route) => false),
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),

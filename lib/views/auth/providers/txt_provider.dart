@@ -1,6 +1,21 @@
+import 'dart:math';
+
 import 'package:flutter/material.dart';
 
-class MyTextEditing with ChangeNotifier {
+import '../../../models/auth.dart';
+
+class AuthProvider with ChangeNotifier {
+  AuthProvider({
+    this.gender = "Laki - laki",
+    this.icon = Icons.male_rounded,
+  });
+
+  String gender;
+  IconData icon;
+
+  bool isShow = false;
+  double rotate = pi * 0;
+
   final TextEditingController emailLogin = TextEditingController();
   final TextEditingController passLogin = TextEditingController();
 
@@ -9,10 +24,10 @@ class MyTextEditing with ChangeNotifier {
   final TextEditingController pass1Regis = TextEditingController();
   final TextEditingController pass2Regis = TextEditingController();
 
-  Map<String, String> loginValue() => {
-        "email": emailLogin.text,
-        "password": passLogin.text,
-      };
+  LoginModel loginValue() => LoginModel(
+        email: emailLogin.text,
+        password: passLogin.text,
+      );
 
   Map<String, String> registerValue() => {
         "name": nameRegis.text,
@@ -20,6 +35,23 @@ class MyTextEditing with ChangeNotifier {
         "password1": pass1Regis.text,
         "password2": pass2Regis.text,
       };
+
+  void changeGender(String gen) {
+    if (rotate == pi * 0) {
+      rotate = pi * 180;
+    } else {
+      rotate = pi * 0;
+    }
+    isShow = !isShow;
+    if (gen == "Laki - laki") {
+      gender = "Laki - laki";
+      icon = Icons.male_rounded;
+    } else if (gen == "Perempuan") {
+      gender = "Perempuan";
+      icon = Icons.female_rounded;
+    }
+    notifyListeners();
+  }
 
   @override
   void dispose() {

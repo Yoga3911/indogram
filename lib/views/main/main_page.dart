@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'calls.dart';
 import 'chats.dart';
 import 'groups.dart';
-import '../more/settings.dart';
-import '../../components/custom_glow.dart';
-import '../../core/style.dart';
-import '../profile/profile.dart';
 import 'models/popup_item.dart';
 import 'widgets/alert.dart';
+import '../../components/custom_glow.dart';
+import '../../core/style.dart';
 
 class MainPage extends StatefulWidget {
   const MainPage({Key? key}) : super(key: key);
@@ -82,12 +80,8 @@ class _MainPageState extends State<MainPage>
                 leading: _isSearch
                     ? const Icon(Icons.search_rounded)
                     : GestureDetector(
-                        onTap: () => Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const ProfilePage(),
-                          ),
-                        ),
+                        onTap: () =>
+                            Navigator.pushNamed(context, "/user/profile"),
                         child: Hero(
                           tag: "profile",
                           child: Container(
@@ -217,12 +211,7 @@ class _MainPageState extends State<MainPage>
   void onSelected(BuildContext context, MenuItem item) {
     switch (item) {
       case MenuItems.settings:
-        Navigator.push(
-          context,
-          MaterialPageRoute(
-            builder: ((context) => const SettingsPage()),
-          ),
-        );
+        Navigator.pushNamed(context, "/user/setting");
         break;
       case MenuItems.signOut:
         showDialog(

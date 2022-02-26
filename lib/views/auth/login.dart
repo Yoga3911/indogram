@@ -1,15 +1,12 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
-import 'package:project/views/auth/widgets/txt_field.dart';
 import 'package:provider/provider.dart';
 
-import '../main/main_page.dart';
-import 'providers/drop_drown_provider.dart';
+import '../auth/widgets/login_txt.dart';
+import '../auth/providers/txt_provider.dart';
 import '../../components/custom_glow.dart';
 import '../../core/style.dart';
-import 'providers/txt_provider.dart';
-import 'register.dart';
 
 class Login extends StatelessWidget {
   const Login({Key? key}) : super(key: key);
@@ -17,7 +14,7 @@ class Login extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     Size _size = MediaQuery.of(context).size;
-    final txt = Provider.of<MyTextEditing>(context);
+    final provider = Provider.of<AuthProvider>(context);
     return SafeArea(
       child: GestureDetector(
         onTap: () => FocusManager.instance.primaryFocus?.unfocus(),
@@ -45,31 +42,16 @@ class Login extends StatelessWidget {
                       ),
                       const SizedBox(height: 40),
                       // >>> EMAIL <<<
-                      MyTextField(
-                        label: "Email",
-                        icon: Icons.email_rounded,
-                        controller: txt.emailLogin,
-                        isLogin: true,
-                        isPassword: false,
-                      ),
+                      EmailLogin(controller: provider.emailLogin),
                       const SizedBox(height: 30),
                       // >>> PASSWORD <<<
-                      MyTextField(
-                        label: "Password",
-                        icon: Icons.lock_rounded,
-                        controller: txt.passLogin,
-                        isLogin: true,
-                        isPassword: true,
-                      ),
+                      PasswordLogin(controller: provider.passLogin),
                       const SizedBox(height: 30),
                       ElevatedButton(
                         onPressed: () {
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => const MainPage(),
-                            ),
-                          );
+                          provider.emailLogin.clear();
+                          provider.passLogin.clear();
+                          Navigator.pushReplacementNamed(context, "/user/main");
                         },
                         child: const Text(
                           "Sign In",
@@ -105,29 +87,21 @@ class Login extends StatelessWidget {
                       ),
                       const SizedBox(height: 30),
                       Text.rich(
-                        TextSpan(children: [
-                          const TextSpan(text: "Don't have an Account ?"),
-                          TextSpan(
-                            text: "   Sign Up",
-                            recognizer: TapGestureRecognizer()
-                              ..onTap = () {
-                                Navigator.push(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) =>
-                                        ChangeNotifierProvider(
-                                      create: (context) => DropDownChanged(),
-                                      child: const Register(),
-                                    ),
-                                  ),
-                                );
-                              },
-                            style: const TextStyle(
-                              fontWeight: FontWeight.w600,
-                              color: Core.primary,
+                        TextSpan(
+                          children: [
+                            const TextSpan(text: "Don't have an Account ?"),
+                            TextSpan(
+                              text: "   Sign Up",
+                              recognizer: TapGestureRecognizer()
+                                ..onTap = () => Navigator.pushNamed(
+                                    context, "/auth/register"),
+                              style: const TextStyle(
+                                fontWeight: FontWeight.w600,
+                                color: Core.primary,
+                              ),
                             ),
-                          ),
-                        ]),
+                          ],
+                        ),
                       )
                     ],
                   ),

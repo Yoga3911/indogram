@@ -1,16 +1,16 @@
 import 'package:flutter/material.dart';
-import 'package:project/views/auth/components/custom_drop_down.dart';
+import 'package:project/views/auth/providers/txt_provider.dart';
 import 'package:provider/provider.dart';
 
+import '../components/custom_drop_down.dart';
 import '../../../core/style.dart';
-import '../providers/drop_drown_provider.dart';
 
 class MyDropDown extends StatelessWidget {
   const MyDropDown({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    final dropDown = Provider.of<DropDownChanged>(context);
+    final dropDown = Provider.of<AuthProvider>(context);
     Size _size = MediaQuery.of(context).size;
     return Column(
       children: [

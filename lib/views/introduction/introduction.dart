@@ -56,12 +56,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
           style: TextStyle(fontSize: 17),
         ),
         footer: ElevatedButton(
-          onPressed: () => Navigator.pushReplacement(
-            context,
-            MaterialPageRoute(
-              builder: ((context) => const Login()),
-            ),
-          ),
+          onPressed: () => Navigator.pushReplacementNamed(context, "/auth/login"),
           child: const Text("Let's Go!"),
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
@@ -104,12 +99,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
           fontWeight: FontWeight.w600,
         ),
       ),
-      onDone: () => Navigator.pushReplacement(
-        context,
-        MaterialPageRoute(
-          builder: ((context) => const Login()),
-        ),
-      ),
+      onDone: () => Navigator.pushReplacementNamed(context, "/auth/login"),
       showDoneButton: true,
     );
   }
