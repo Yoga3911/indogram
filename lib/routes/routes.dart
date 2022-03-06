@@ -1,4 +1,10 @@
-import 'export.dart';
+import 'package:flutter/material.dart';
+import '../views/auth/login.dart';
+import '../views/auth/register.dart';
+import '../views/profile/profile.dart';
+import '../views/introduction/introduction.dart';
+import '../views/main/main_page.dart';
+import '../views/more/settings.dart';
 
 abstract class Routes {
   Routes._();
