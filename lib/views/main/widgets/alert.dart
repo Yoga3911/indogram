@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
+import 'package:project/services/google.dart';
 
 class Alert extends StatelessWidget {
   const Alert({Key? key}) : super(key: key);
-
   @override
   Widget build(BuildContext context) {
+    final google = GoogleService();
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -28,8 +29,11 @@ class Alert extends StatelessWidget {
           child: const Text("Batal"),
         ),
         ElevatedButton(
-          onPressed: () => Navigator.pushNamedAndRemoveUntil(
-              context, "/auth/login", (route) => false),
+          onPressed: () async {
+            await google.signOut();
+            Navigator.pushNamedAndRemoveUntil(
+                context, "/auth/login", (route) => false);
+          },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(
               borderRadius: BorderRadius.circular(15),

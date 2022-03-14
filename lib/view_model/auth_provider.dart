@@ -2,7 +2,7 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-import '../../../models/auth.dart';
+import '../models/auth.dart';
 
 class AuthProvider with ChangeNotifier {
   AuthProvider({

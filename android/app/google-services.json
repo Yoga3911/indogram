@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "322683905313",
+    "project_id": "indogram-fef3e",
+    "storage_bucket": "indogram-fef3e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:322683905313:android:6f219aa17ec131f2a04a60",
+        "android_client_info": {
+          "package_name": "com.indogram.project"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "322683905313-7f32m23vnets5mvm3d5e0c7hqoh3osne.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.indogram.project",
+            "certificate_hash": "fa92eeffeb229a28939ac215d74bdac4c8c31706"
+          }
+        },
+        {
+          "client_id": "322683905313-41ldt3h9t89e9jjkh8vd5mkfh12sn62s.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBufjwfGE5Jvx1-C1Xfq_FWAiTV9qtK9EA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "322683905313-41ldt3h9t89e9jjkh8vd5mkfh12sn62s.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

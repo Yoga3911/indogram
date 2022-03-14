@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 import 'calls.dart';
@@ -17,6 +18,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
+
+  User? user =  FirebaseAuth.instance.currentUser;
+
   late TabController controller;
   final tabScales = List.generate(3, (index) => index == 0 ? 1.0 : 0.0);
   late TextEditingController _searchController;
@@ -90,9 +94,9 @@ class _MainPageState extends State<MainPage>
                                 color: Colors.white, shape: BoxShape.circle),
                             child: Container(
                               margin: const EdgeInsets.all(1),
-                              child: const CircleAvatar(
+                              child: CircleAvatar(
                                 backgroundImage:
-                                    AssetImage("assets/images/pp.jpg"),
+                                    NetworkImage("https://firebasestorage.googleapis.com/v0/b/indogram-fef3e.appspot.com/o/photo_profile%2Fprofile.png?alt=media&token=6af87aa0-30b7-4d0d-b708-817469b5de57"),
                               ),
                             ),
                           ),

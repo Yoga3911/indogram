@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:project/views/auth/providers/txt_provider.dart';
+import 'package:project/view_model/auth_provider.dart';
 import 'package:provider/provider.dart';
 
-import '../components/custom_drop_down.dart';
+import '../../../components/custom_drop_down.dart';
 import '../../../core/style.dart';
 
 class MyDropDown extends StatelessWidget {

@@ -1,10 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:project/routes/routes.dart';
+import 'package:project/services/email.dart';
+import 'package:project/services/google.dart';
 import 'package:provider/provider.dart';
 
+import '../../services/facebook.dart';
 import '../auth/widgets/login_txt.dart';
-import '../auth/providers/txt_provider.dart';
+import '../../view_model/auth_provider.dart';
 import '../../components/custom_glow.dart';
 import '../../core/style.dart';
 
@@ -13,6 +17,9 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final google = GoogleService();
+    final facebook = FacebookService();
+    final email = EmailService();
     Size _size = MediaQuery.of(context).size;
     final provider = Provider.of<AuthProvider>(context);
     return SafeArea(
@@ -48,10 +55,17 @@ class Login extends StatelessWidget {
                       PasswordLogin(controller: provider.passLogin),
                       const SizedBox(height: 30),
                       ElevatedButton(
-                        onPressed: () {
-                          provider.emailLogin.clear();
-                          provider.passLogin.clear();
-                          Navigator.pushReplacementNamed(context, "/user/main");
+                        onPressed: () async {
+                          await email
+                              .signIn(
+                                  email: provider.emailLogin.text,
+                                  password: provider.passLogin.text)
+                              .whenComplete(() {
+                            provider.emailLogin.clear();
+                            provider.passLogin.clear();
+                            Navigator.pushReplacementNamed(
+                                context, Routes.main);
+                          });
                         },
                         child: const Text(
                           "Sign In",
@@ -73,14 +87,30 @@ class Login extends StatelessWidget {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
-                          SizedBox(
-                            height: _size.height * 0.04,
-                            child: Image.asset("assets/images/google.png"),
+                          GestureDetector(
+                            child: SizedBox(
+                              height: _size.height * 0.04,
+                              child: Image.asset("assets/images/google.png"),
+                            ),
+                            onTap: () async => await google.signIn().then(
+                                  (_) => Navigator.pushReplacementNamed(
+                                    context,
+                                    Routes.main,
+                                  ),
+                                ),
                           ),
                           const SizedBox(width: 40),
-                          SizedBox(
-                            height: _size.height * 0.04,
-                            child: Image.asset("assets/images/facebook.png"),
+                          GestureDetector(
+                            child: SizedBox(
+                              height: _size.height * 0.04,
+                              child: Image.asset("assets/images/facebook.png"),
+                            ),
+                            onTap: () async => facebook.signIn().then(
+                                  (_) => Navigator.pushReplacementNamed(
+                                    context,
+                                    Routes.main,
+                                  ),
+                                ),
                           ),
                           // Icon(Icons., color: Colors.white),
                         ],
@@ -94,7 +124,7 @@ class Login extends StatelessWidget {
                               text: "   Sign Up",
                               recognizer: TapGestureRecognizer()
                                 ..onTap = () => Navigator.pushNamed(
-                                    context, "/auth/register"),
+                                    context, Routes.register),
                               style: const TextStyle(
                                 fontWeight: FontWeight.w600,
                                 color: Core.primary,

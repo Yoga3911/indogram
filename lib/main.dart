@@ -1,11 +1,14 @@
-import 'package:project/providers/init.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:project/view_model/init.dart';
 import 'package:project/routes/routes.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 import 'core/style.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   runApp(const MyApp());
 }
 
@@ -19,8 +22,8 @@ class MyApp extends StatelessWidget {
       child: MaterialApp(
         theme: Core.myTheme(context),
         debugShowCheckedModeBanner: false,
-        routes: Routes.routes,
-        initialRoute: "/introduction",
+        routes: Routes.data,
+        initialRoute: Routes.introduction,
       ),
     );
   }

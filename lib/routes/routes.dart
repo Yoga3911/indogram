@@ -16,7 +16,7 @@ abstract class Routes {
   static const String main = "/user/main";
   static const String setting = "/user/setting";
 
-  static final routes = <String, WidgetBuilder>{
+  static final data = <String, WidgetBuilder>{
     introduction: (context) => const IntroductionPage(),
     login: (context) => const Login(),
     register: (context) => const Register(),

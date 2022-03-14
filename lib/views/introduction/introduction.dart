@@ -4,6 +4,8 @@ import 'package:flutter_svg/svg.dart';
 import 'package:introduction_screen/introduction_screen.dart';
 import 'package:project/core/style.dart';
 
+import '../../routes/routes.dart';
+
 class IntroductionPage extends StatefulWidget {
   const IntroductionPage({Key? key}) : super(key: key);
 
@@ -98,7 +100,7 @@ class _IntroductionPageState extends State<IntroductionPage> {
           fontWeight: FontWeight.w600,
         ),
       ),
-      onDone: () => Navigator.pushReplacementNamed(context, "/auth/login"),
+      onDone: () => Navigator.pushReplacementNamed(context, Routes.login),
       showDoneButton: true,
     );
   }

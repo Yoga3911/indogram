@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../../core/style.dart';
+import '../core/style.dart';
 
 class DropDownShape extends CustomPainter {
   @override

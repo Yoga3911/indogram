@@ -1,12 +1,14 @@
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:project/routes/routes.dart';
+import 'package:project/services/email.dart';
 import 'package:project/views/auth/widgets/register_txt.dart';
 import 'package:provider/provider.dart';
 
 import '../../components/custom_glow.dart';
 import '../../core/style.dart';
-import 'providers/txt_provider.dart';
+import '../../view_model/auth_provider.dart';
 import 'widgets/drop_down.dart';
 
 class Register extends StatelessWidget {
@@ -14,6 +16,7 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AuthProvider>(context);
+    final email = EmailService();
     Size _size = MediaQuery.of(context).size;
     return SafeArea(
       child: WillPopScope(
@@ -65,13 +68,17 @@ class Register extends StatelessWidget {
                         const MyDropDown(),
                         const SizedBox(height: 30),
                         ElevatedButton(
-                          onPressed: () {
+                          onPressed: () async {
+                            await email.signUp(email: provider.emailRegis.text, password: provider.pass1Regis.text);
                             provider.nameRegis.clear();
                             provider.emailRegis.clear();
                             provider.pass1Regis.clear();
                             provider.pass2Regis.clear();
-                            Navigator.pushReplacementNamed(
-                                context, "/auth/login");
+                            Navigator.pushNamedAndRemoveUntil(
+                              context,
+                              Routes.login,
+                              (route) => false,
+                            );
                           },
                           child: const Text(
                             "Sign Up",
@@ -121,8 +128,9 @@ class Register extends StatelessWidget {
                                     Navigator.pop(context);
                                   },
                                 style: const TextStyle(
-                                    fontWeight: FontWeight.w600,
-                                    color: Core.primary),
+                                  fontWeight: FontWeight.w600,
+                                  color: Core.primary,
+                                ),
                               ),
                             ],
                           ),

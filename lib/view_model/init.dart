@@ -1,9 +1,9 @@
 import 'package:provider/provider.dart';
 import 'package:provider/single_child_widget.dart';
 
-import '../views/auth/providers/txt_provider.dart';
+import 'auth_provider.dart';
 
-abstract class MyProvider {
+class MyProvider {
   MyProvider._();
 
   static final List<SingleChildWidget> providers = [
