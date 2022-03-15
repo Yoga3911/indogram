@@ -2,11 +2,11 @@ import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'social_service.dart';
 
-class GoogleService extends SocialService {
-  @override
-  Future<UserCredential> signIn() async {
+class GoogleService {
+  GoogleService._();
+  
+  static Future<UserCredential> signIn() async {
     try {
       final GoogleSignInAccount? user = await GoogleSignIn().signIn();
       final GoogleSignInAuthentication? auth = await user?.authentication;
@@ -24,9 +24,9 @@ class GoogleService extends SocialService {
     }
   }
 
-  @override
-  Future<void> signOut() async {
+  static Future<void> signOut() async {
     await GoogleSignIn().signOut();
     await FirebaseAuth.instance.signOut();
+    log("Success log out from google account");
   }
 }

@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:project/services/email.dart';
+import 'package:project/services/facebook.dart';
 import 'package:project/services/google.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+
+import '../../../routes/routes.dart';
 
 class Alert extends StatelessWidget {
   const Alert({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
-    final google = GoogleService();
     return AlertDialog(
       shape: RoundedRectangleBorder(
         borderRadius: BorderRadius.circular(15),
@@ -30,9 +34,24 @@ class Alert extends StatelessWidget {
         ),
         ElevatedButton(
           onPressed: () async {
-            await google.signOut();
+            final pref = await SharedPreferences.getInstance();
+            switch (pref.get("social").toString()) {
+              case "email":
+                EmailService.signOut();
+                break;
+              case "google":
+                GoogleService.signOut();
+                break;
+              case "facebook":
+                FacebookService.signOut();
+                break;
+            }
+            pref.remove("social");
             Navigator.pushNamedAndRemoveUntil(
-                context, "/auth/login", (route) => false);
+              context,
+              Routes.login,
+              (route) => false,
+            );
           },
           style: ElevatedButton.styleFrom(
             shape: RoundedRectangleBorder(

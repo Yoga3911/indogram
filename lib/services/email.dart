@@ -1,38 +1,45 @@
 import 'dart:developer';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:project/services/social_service.dart';
 
-class EmailService extends SocialService {
-  final _auth = FirebaseAuth.instance;
-  Future<void> signUp({String email = "email", String password = "password"}) async {
+class EmailService {
+  EmailService._();
+
+  static Future<void> signUp({String email = "email", String password = "password"}) async {
     try {
-      await _auth.createUserWithEmailAndPassword(email: email, password: password);
+      await FirebaseAuth.instance
+          .createUserWithEmailAndPassword(email: email, password: password);
+      if (FirebaseAuth.instance.currentUser != null &&
+          !FirebaseAuth.instance.currentUser!.emailVerified) {
+        log("Verif email");
+        await FirebaseAuth.instance.currentUser!.sendEmailVerification();
+      }
+
+      log("Login success");
+
       return;
     } on FirebaseAuthException catch (e) {
-      log(e.message.toString());
+      assert(e.code != "weak-password", "Password yang anda masukkan tidak aman");
+      assert(e.code != "email-already-in-use", "Email sudah terdaftar");
       rethrow;
     }
   }
 
-  @override
-  Future<UserCredential> signIn({String email = "email@gmail.com", String password = "password"}) async {
+  static Future<UserCredential> signIn({String email = "email@gmail.com", String password = "password"}) async {
     try {
-      final UserCredential user = await _auth.signInWithEmailAndPassword(email: email, password: password);
+      final UserCredential user = await FirebaseAuth.instance
+          .signInWithEmailAndPassword(email: email, password: password);
+      log("Login success");
       return user;
-    } on FirebaseAuthException catch(e) {
-      if (e.code == "user-not-found") {
-        log("User not found");
-      } else if (e.code == "wrong-password") {
-        log("Invalid password");
-      }
-      log(e.message.toString());
+    } on FirebaseAuthException catch (e) {
+      assert(e.code != "user-not-found", "User tidak ditemukan");
+      assert(e.code != "wrong-password", "Password salah");
       rethrow;
     }
   }
 
-  @override
-  Future<void> signOut() async {
-    await _auth.signOut();
+  static Future<void> signOut() async {
+    await FirebaseAuth.instance.signOut();
+    log("Success log out from email account");
   }
 }

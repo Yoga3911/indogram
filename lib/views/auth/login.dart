@@ -3,10 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:project/routes/routes.dart';
 import 'package:project/services/email.dart';
+import 'package:project/services/facebook.dart';
 import 'package:project/services/google.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
-import '../../services/facebook.dart';
 import '../auth/widgets/login_txt.dart';
 import '../../view_model/auth_provider.dart';
 import '../../components/custom_glow.dart';
@@ -17,9 +18,6 @@ class Login extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final google = GoogleService();
-    final facebook = FacebookService();
-    final email = EmailService();
     Size _size = MediaQuery.of(context).size;
     final provider = Provider.of<AuthProvider>(context);
     return SafeArea(
@@ -55,18 +53,25 @@ class Login extends StatelessWidget {
                       PasswordLogin(controller: provider.passLogin),
                       const SizedBox(height: 30),
                       ElevatedButton(
-                        onPressed: () async {
-                          await email
-                              .signIn(
-                                  email: provider.emailLogin.text,
-                                  password: provider.passLogin.text)
-                              .whenComplete(() {
+                        onPressed: () => EmailService.signIn(
+                                email: provider.emailLogin.text,
+                                password: provider.passLogin.text)
+                            .then(
+                          (user) async {
+                            final pref = await SharedPreferences.getInstance();
+                            pref.setString(
+                              "social",
+                              "email",
+                            );
                             provider.emailLogin.clear();
                             provider.passLogin.clear();
                             Navigator.pushReplacementNamed(
-                                context, Routes.main);
-                          });
-                        },
+                              context,
+                              Routes.main,
+                              arguments: user,
+                            );
+                          },
+                        ),
                         child: const Text(
                           "Sign In",
                           style: TextStyle(fontSize: 16),
@@ -92,12 +97,21 @@ class Login extends StatelessWidget {
                               height: _size.height * 0.04,
                               child: Image.asset("assets/images/google.png"),
                             ),
-                            onTap: () async => await google.signIn().then(
-                                  (_) => Navigator.pushReplacementNamed(
-                                    context,
-                                    Routes.main,
-                                  ),
-                                ),
+                            onTap: () => GoogleService.signIn().then(
+                              (user) async {
+                                final pref =
+                                    await SharedPreferences.getInstance();
+                                pref.setString(
+                                  "social",
+                                  "google",
+                                );
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  Routes.main,
+                                  arguments: user,
+                                );
+                              },
+                            ),
                           ),
                           const SizedBox(width: 40),
                           GestureDetector(
@@ -105,12 +119,21 @@ class Login extends StatelessWidget {
                               height: _size.height * 0.04,
                               child: Image.asset("assets/images/facebook.png"),
                             ),
-                            onTap: () async => facebook.signIn().then(
-                                  (_) => Navigator.pushReplacementNamed(
-                                    context,
-                                    Routes.main,
-                                  ),
-                                ),
+                            onTap: () => FacebookService.signIn().then(
+                              (user) async {
+                                final pref =
+                                    await SharedPreferences.getInstance();
+                                pref.setString(
+                                  "social",
+                                  "facebook",
+                                );
+                                Navigator.pushReplacementNamed(
+                                  context,
+                                  Routes.main,
+                                  arguments: user,
+                                );
+                              },
+                            ),
                           ),
                           // Icon(Icons., color: Colors.white),
                         ],

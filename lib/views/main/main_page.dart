@@ -1,5 +1,9 @@
+import 'dart:developer';
+
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:project/routes/routes.dart';
 
 import 'calls.dart';
 import 'chats.dart';
@@ -18,8 +22,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
-
-  User? user =  FirebaseAuth.instance.currentUser;
 
   late TabController controller;
   final tabScales = List.generate(3, (index) => index == 0 ? 1.0 : 0.0);
@@ -59,6 +61,8 @@ class _MainPageState extends State<MainPage>
 
   @override
   Widget build(BuildContext context) {
+    final args = ModalRoute.of(context)!.settings.arguments as UserCredential;
+    inspect(args.user!.email);
     return Scaffold(
       body: DefaultTabController(
         length: 3,
@@ -95,8 +99,10 @@ class _MainPageState extends State<MainPage>
                             child: Container(
                               margin: const EdgeInsets.all(1),
                               child: CircleAvatar(
-                                backgroundImage:
-                                    NetworkImage("https://firebasestorage.googleapis.com/v0/b/indogram-fef3e.appspot.com/o/photo_profile%2Fprofile.png?alt=media&token=6af87aa0-30b7-4d0d-b708-817469b5de57"),
+                                child: CachedNetworkImage(
+                                    fit: BoxFit.cover,
+                                    imageUrl:
+                                        "https://firebasestorage.googleapis.com/v0/b/indogram-fef3e.appspot.com/o/photo_profile%2Fprofile.png?alt=media&token=6af87aa0-30b7-4d0d-b708-817469b5de57"),
                               ),
                             ),
                           ),
@@ -215,7 +221,7 @@ class _MainPageState extends State<MainPage>
   void onSelected(BuildContext context, MenuItem item) {
     switch (item) {
       case MenuItems.settings:
-        Navigator.pushNamed(context, "/user/setting");
+        Navigator.pushNamed(context, Routes.setting);
         break;
       case MenuItems.signOut:
         showDialog(

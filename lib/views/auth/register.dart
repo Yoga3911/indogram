@@ -3,8 +3,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:project/routes/routes.dart';
 import 'package:project/services/email.dart';
+import 'package:project/services/facebook.dart';
+import 'package:project/services/google.dart';
 import 'package:project/views/auth/widgets/register_txt.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../components/custom_glow.dart';
 import '../../core/style.dart';
@@ -16,7 +19,6 @@ class Register extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final provider = Provider.of<AuthProvider>(context);
-    final email = EmailService();
     Size _size = MediaQuery.of(context).size;
     return SafeArea(
       child: WillPopScope(
@@ -69,7 +71,9 @@ class Register extends StatelessWidget {
                         const SizedBox(height: 30),
                         ElevatedButton(
                           onPressed: () async {
-                            await email.signUp(email: provider.emailRegis.text, password: provider.pass1Regis.text);
+                            await EmailService.signUp(
+                                email: provider.emailRegis.text,
+                                password: provider.pass1Regis.text);
                             provider.nameRegis.clear();
                             provider.emailRegis.clear();
                             provider.pass1Regis.clear();
@@ -100,14 +104,49 @@ class Register extends StatelessWidget {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            SizedBox(
-                              height: _size.height * 0.04,
-                              child: Image.asset("assets/images/google.png"),
+                            GestureDetector(
+                              child: SizedBox(
+                                height: _size.height * 0.04,
+                                child: Image.asset("assets/images/google.png"),
+                              ),
+                              onTap: () => GoogleService.signIn().then(
+                                (user) async {
+                                  final pref =
+                                      await SharedPreferences.getInstance();
+                                  pref.setString(
+                                    "social",
+                                    "google",
+                                  );
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    Routes.main,
+                                    arguments: user,
+                                  );
+                                },
+                              ),
                             ),
                             const SizedBox(width: 40),
-                            SizedBox(
-                              height: _size.height * 0.04,
-                              child: Image.asset("assets/images/facebook.png"),
+                            GestureDetector(
+                              child: SizedBox(
+                                height: _size.height * 0.04,
+                                child:
+                                    Image.asset("assets/images/facebook.png"),
+                              ),
+                              onTap: () => FacebookService.signIn().then(
+                                (user) async {
+                                  final pref =
+                                      await SharedPreferences.getInstance();
+                                  pref.setString(
+                                    "social",
+                                    "facebook",
+                                  );
+                                  Navigator.pushReplacementNamed(
+                                    context,
+                                    Routes.main,
+                                    arguments: user,
+                                  );
+                                },
+                              ),
                             ),
                             // Icon(Icons., color: Colors.white),
                           ],
