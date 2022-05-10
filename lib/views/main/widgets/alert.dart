@@ -6,8 +6,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 import '../../../routes/routes.dart';
 
-class Alert extends StatelessWidget {
-  const Alert({Key? key}) : super(key: key);
+class SignOutAlert extends StatelessWidget {
+  const SignOutAlert({Key? key}) : super(key: key);
   @override
   Widget build(BuildContext context) {
     return AlertDialog(

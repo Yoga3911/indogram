@@ -8,7 +8,7 @@ class MyProvider {
 
   static final List<SingleChildWidget> providers = [
     ChangeNotifierProvider(
-      create: (context) => AuthProvider(),
+      create: (_) => AuthProvider(),
       lazy: true,
     )
   ];

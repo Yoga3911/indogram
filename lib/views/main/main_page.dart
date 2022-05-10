@@ -22,7 +22,6 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage>
     with SingleTickerProviderStateMixin {
-
   late TabController controller;
   final tabScales = List.generate(3, (index) => index == 0 ? 1.0 : 0.0);
   late TextEditingController _searchController;
@@ -101,7 +100,7 @@ class _MainPageState extends State<MainPage>
                               child: CircleAvatar(
                                 child: CachedNetworkImage(
                                     fit: BoxFit.cover,
-                                    imageUrl:
+                                    imageUrl: args.user!.photoURL ??
                                         "https://firebasestorage.googleapis.com/v0/b/indogram-fef3e.appspot.com/o/photo_profile%2Fprofile.png?alt=media&token=6af87aa0-30b7-4d0d-b708-817469b5de57"),
                               ),
                             ),
@@ -227,7 +226,7 @@ class _MainPageState extends State<MainPage>
         showDialog(
             barrierDismissible: false,
             context: context,
-            builder: (context) => const Alert());
+            builder: (context) => const SignOutAlert());
         break;
     }
   }

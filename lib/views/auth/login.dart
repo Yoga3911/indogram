@@ -5,6 +5,7 @@ import 'package:project/routes/routes.dart';
 import 'package:project/services/email.dart';
 import 'package:project/services/facebook.dart';
 import 'package:project/services/google.dart';
+import 'package:project/views/auth/widgets/alert.dart';
 import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -53,25 +54,34 @@ class Login extends StatelessWidget {
                       PasswordLogin(controller: provider.passLogin),
                       const SizedBox(height: 30),
                       ElevatedButton(
-                        onPressed: () => EmailService.signIn(
-                                email: provider.emailLogin.text,
-                                password: provider.passLogin.text)
-                            .then(
-                          (user) async {
-                            final pref = await SharedPreferences.getInstance();
-                            pref.setString(
-                              "social",
-                              "email",
-                            );
-                            provider.emailLogin.clear();
-                            provider.passLogin.clear();
-                            Navigator.pushReplacementNamed(
-                              context,
-                              Routes.main,
-                              arguments: user,
-                            );
-                          },
-                        ),
+                        onPressed: () {
+                          EmailService.signIn(
+                            email: provider.emailLogin.text,
+                            password: provider.passLogin.text,
+                          ).then(
+                            (user) async {
+                              final pref =
+                                  await SharedPreferences.getInstance();
+                              pref.setString(
+                                "social",
+                                "email",
+                              );
+                              provider.emailLogin.clear();
+                              provider.passLogin.clear();
+                              Navigator.pushReplacementNamed(
+                                context,
+                                Routes.main,
+                                arguments: user,
+                              );
+                            },
+                          );
+                          showDialog(
+                            context: context,
+                            builder: (_) => const FailLoginAlert(
+                              error: "Wrong email or password",
+                            ),
+                          );
+                        },
                         child: const Text(
                           "Sign In",
                           style: TextStyle(fontSize: 16),
